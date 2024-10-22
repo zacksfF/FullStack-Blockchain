@@ -7,14 +7,14 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-// account represent information stored in the database for an individual account.
+// Account represents information stored in the database for an individual account.
 type Account struct {
 	AccountID AccountID
-	Nonce     int
+	Nonce     uint64
 	Balance   uint64
 }
 
-// newAccount contructs a new account value for use.
+// newAccount constructs a new account value for use.
 func newAccount(accountID AccountID, balance uint64) Account {
 	return Account{
 		AccountID: accountID,
@@ -22,18 +22,19 @@ func newAccount(accountID AccountID, balance uint64) Account {
 	}
 }
 
+// =============================================================================
+
 // AccountID represents an account id that is used to sign transactions and is
 // associated with transactions on the blockchain. This will be the last 20
 // bytes of the public key.
 type AccountID string
 
 // ToAccountID converts a hex-encoded string to an account and validates the
-// hex-encoded string is formmatted correctly
+// hex-encoded string is formatted correctly.
 func ToAccountID(hex string) (AccountID, error) {
 	a := AccountID(hex)
-
 	if !a.IsAccountID() {
-		return "", errors.New("Invalid account format ")
+		return "", errors.New("invalid account format")
 	}
 
 	return a, nil
@@ -56,7 +57,9 @@ func (a AccountID) IsAccountID() bool {
 	return len(a) == 2*addressLength && isHex(a)
 }
 
-// has0xPrefix validates teh account starts with 0x.
+// =============================================================================
+
+// has0xPrefix validates the account starts with a 0x.
 func has0xPrefix(a AccountID) bool {
 	return len(a) >= 2 && a[0] == '0' && (a[1] == 'x' || a[1] == 'X')
 }
@@ -80,6 +83,8 @@ func isHex(a AccountID) bool {
 func isHexCharacter(c byte) bool {
 	return ('0' <= c && c <= '9') || ('a' <= c && c <= 'f') || ('A' <= c && c <= 'F')
 }
+
+// =============================================================================
 
 // byAccount provides sorting support by the account id value.
 type byAccount []Account
