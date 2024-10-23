@@ -1,5 +1,7 @@
 package worker
 
+import "github.com/zacksfF/FullStack-Blockchain/blockchain/peer"
+
 // CORE NOTE: The p2p network is managed by this goroutine. There is
 // a single node that is considered the origin node. The defaults in
 // main.go represent the origin node. That node must be running first.

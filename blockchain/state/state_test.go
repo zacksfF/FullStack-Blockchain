@@ -11,6 +11,7 @@ import (
 	"github.com/zacksfF/FullStack-Blockchain/blockchain/genesis"
 	"github.com/zacksfF/FullStack-Blockchain/blockchain/peer"
 	"github.com/zacksfF/FullStack-Blockchain/blockchain/state"
+	"github.com/zacksfF/FullStack-Blockchain/blockchain/storage/memory"
 )
 
 const (
@@ -238,7 +239,7 @@ func newNode(hexKey string, t *testing.T) *state.State {
 		Genesis:        newGenesis(),
 		Storage:        storage,
 		SelectStrategy: "Tip",
-		KnownPeers:     peer.NewPeerSet(),
+		KnownPeers:     *peer.NewPeerSet(),
 		EvHandler:      func(v string, args ...any) {},
 	})
 	if err != nil {

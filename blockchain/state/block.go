@@ -77,7 +77,7 @@ func (s *State) ProcessProposedBlock(block database.Block) error {
 
 	// If the runMiningOperation function is being executed it needs to stop
 	// immediately.
-	s.Worker.SignalCancelMining()
+	s.Worker.SignalStartMining()
 
 	return nil
 }
