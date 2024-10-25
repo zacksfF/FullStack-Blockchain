@@ -68,3 +68,15 @@ func (evt *Events) Send(s string) {
 		}
 	}
 }
+
+// Shutdown closes and removes all channels that were provided by
+// the call to Acquire.
+func (evt *Events) Shutdown() {
+	evt.mu.RLock()
+	defer evt.mu.RUnlock()
+
+	for id, ch := range evt.m {
+		delete(evt.m, id)
+		close(ch)
+	}
+}
